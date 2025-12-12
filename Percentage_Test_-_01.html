@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>test</title>
+  <style>
+    /* Simple Material-like style to match your screenshots */
+    :root{
+      --primary:#0f7ea8; /* top bar color */
+      --surface:#ffffff;
+      --text:#212121;
+      --muted:#9aa1a6;
+      --fab:#0a6b82;
+      --shadow: 0 6px 14px rgba(0,0,0,0.18);
+      font-family: "Roboto", "Helvetica", Arial, sans-serif;
+    }
+    body{ margin:0; background:var(--surface); color:var(--text); }
+    .appbar{
+      height:56px;
+      background:var(--primary);
+      color:white;
+      display:flex;
+      align-items:center;
+      padding:0 16px;
+      box-sizing:border-box;
+      font-size:20px;
+      font-weight:500;
+      position:sticky;
+      top:0;
+      z-index:10;
+    }
+    .content{
+      padding:40px 24px;
+      min-height:calc(100vh - 56px);
+      box-sizing:border-box;
+      display:flex;
+      flex-direction:column;
+      justify-content:flex-start;
+      align-items:flex-start;
+    }
+    .big-center{
+      margin-top:120px;
+      font-size:26px;
+      color: #7a8084;
+      letter-spacing:0.5px;
+      max-width:100%;
+      word-break:break-word;
+    }
+    /* floating action button (bottom-right) */
+    .fab{
+      width:56px;
+      height:56px;
+      border-radius:12px;
+      position:fixed;
+      right:18px;
+      bottom:18px;
+      background:var(--fab);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      box-shadow: var(--shadow);
+      color:white;
+      font-size:20px;
+      text-decoration:none;
+    }
+    .note{
+      position:fixed;
+      left:50%;
+      transform:translateX(-50%);
+      bottom:12px;
+      background: #222;
+      color:#fff;
+      padding:10px 18px;
+      border-radius:28px;
+      font-size:13px;
+      display:none; /* hide by default; use JS to show if needed */
+    }
+    .card{
+      margin-top:16px;
+      padding:12px;
+      border-radius:8px;
+      background:#fbfbfb;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+      width:100%;
+    }
+    a.linkbtn{
+      display:inline-block;
+      margin-top:10px;
+      padding:8px 12px;
+      background:var(--primary);
+      color:white;
+      border-radius:6px;
+      text-decoration:none;
+      font-size:14px;
+    }
+    /* responsive */
+    @media (min-width:720px){
+      .content{ padding:56px 64px; }
+      .big-center{ font-size:34px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="appbar">test</div>
+
+  <div class="content">
+    <!-- Replace this text with your test title/description -->
+    <div class="big-center" id="mainText">Textvsjwj s jnshsbView</div>
+
+    <div class="card">
+      <strong>Instructions:</strong>
+      <div style="margin-top:6px;color:var(--muted);font-size:14px;">
+        This is a local HTML file. If you want to open it in your app's WebView use the file:// path.
+      </div>
+
+      <div style="margin-top:10px;">
+        <a class="linkbtn" id="downloadBtn" href="#" download="Percentage_Test_-_01.html">Download HTML</a>
+      </div>
+    </div>
+  </div>
+
+  <a class="fab" title="Open" href="#" onclick="openAction()">🔌</a>
+
+  <div class="note" id="note">Chrome does not have access to the requested resource.</div>
+
+  <script>
+    // Example: change main text dynamically (you can replace with real content)
+    // document.getElementById('mainText').textContent = 'Your test title here';
+
+    function openAction(){
+      // If you plan to use in WebView, this button can call a JS interface.
+      // Here just show the bottom note for demo (mimic your error message).
+      var n = document.getElementById('note');
+      n.style.display = 'block';
+      setTimeout(()=> n.style.display='none', 4200);
+    }
+
+    // Create downloadable blob for "Download HTML" so user can save a copy from browser
+    (function prepareDownload(){
+      try{
+        var html = document.documentElement.outerHTML;
+        var blob = new Blob([html], {type: 'text/html'});
+        var url = URL.createObjectURL(blob);
+        var btn = document.getElementById('downloadBtn');
+        btn.href = url;
+      }catch(e){ /* ignore */ }
+    })();
+  </script>
+</body>
+</html>
